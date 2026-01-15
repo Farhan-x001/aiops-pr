@@ -1,0 +1,12 @@
+# Simple Log Parser rules tuned for Maven output
+# Each rule: <type> <regex>
+
+# Treat any [ERROR] line as an error
+error /\[ERROR\].*/
+
+# Detect Maven goal failure lines
+failure /\[ERROR\] Failed to execute goal.*/
+
+# Exceptions and stack traces
+error /Exception in thread.*/
+error /java\.lang\..*/

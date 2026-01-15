@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiops-pr-deployment
+  labels:
+    app: aiops-pr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aiops-pr
+  template:
+    metadata:
+      labels:
+        app: aiops-pr
+    spec:
+      containers:
+        - name: aiops-pr
+          image: ${IMAGE_NAME:-your-registry/aiops-pr:latest}
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
